@@ -4,23 +4,34 @@ const username = document.getElementById('username'),
       rePassword = document.getElementById('re-password'),
       form = document.getElementById('form');
 
-function error(input, message){
-    input.classList = 'is-invalid';
+function error(input,message){
+    input.className = 'error';
     var errorMessage = input.nextElementSibling;
-    errorMessage.innerHTML = `${input.id} hatalı.`
+    errorMessage.innerHTML = message;
 }
 
 function successful(input){    
+    input.className = 'successful';
     var errorMessage = input.nextElementSibling;
     errorMessage.innerHTML = "";
-    input.classList = 'is-valid';
     
+}
+
+function checkEmail(input) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    
+    if(re.test(input.value)){
+        successful(input);
+    }
+    else{
+        error(input, 'hatalı bir mail adresi');
+    }
 }
 
 function checkRequired(inputs){
     inputs.forEach(function(input){
         if(input.value === ""){
-            error(input);
+            error(input, `${input.id} hatalı.`);
         }
         else{
             successful(input);
@@ -30,7 +41,6 @@ function checkRequired(inputs){
 
 form.addEventListener('submit', function(e){
     e.preventDefault();
-    checkRequired([username,email,password,rePassword]);
+    checkRequired([username,password,rePassword]);
+    checkEmail(email);
 })
-
-
