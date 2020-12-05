@@ -28,10 +28,20 @@ function checkEmail(input) {
     }
 }
 
+function checkPassword(input){
+    if(input.value===password.value){
+        successful(input);
+    }
+    else{
+        error(input, 'şifreler uyuşmuyor');
+        error(password,'');
+    }
+}
+
 function checkRequired(inputs){
     inputs.forEach(function(input){
         if(input.value === ""){
-            error(input, `${input.id} hatalı.`);
+            error(input,`${input.id} hatalı.`);
         }
         else{
             successful(input);
@@ -41,6 +51,7 @@ function checkRequired(inputs){
 
 form.addEventListener('submit', function(e){
     e.preventDefault();
-    checkRequired([username,password,rePassword]);
+    checkRequired([username,password]);
+    checkPassword(rePassword)
     checkEmail(email);
 })
