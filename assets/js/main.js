@@ -29,9 +29,10 @@ function checkEmail(input) {
 }
 
 function checkPassword(input){
-    if(input.value===password.value){
+    if(input.value===password.value && password.value!=''){
         successful(input);
     }
+    
     else{
         error(input, 'şifreler uyuşmuyor');
         error(password,'');
